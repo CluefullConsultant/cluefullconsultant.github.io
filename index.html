@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clueless Consultant</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            color: #111827;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Nav */
+        nav {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #f3f4f6;
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+        }
+        nav .container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { font-size: 1rem; font-weight: 700; color: #111827; text-decoration: none; letter-spacing: -0.02em; }
+        .nav-links { display: flex; gap: 1.25rem; align-items: center; }
+        .nav-links a { font-size: 0.85rem; color: #6b7280; text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: #111827; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.55rem 1.1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.15s, transform 0.1s;
+        }
+        .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+        .btn-orange { background: #f97316; color: #fff; }
+        .btn-indigo { background: #6366f1; color: #fff; }
+        .btn-ghost  { background: #f3f4f6; color: #374151; }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.2rem 0.75rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+        .tag-amber  { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .tag-indigo { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+
+        /* Hero */
+        .hero { padding: 5rem 0 4rem; }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.15;
+            color: #111827;
+            max-width: 680px;
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 em { font-style: normal; color: #f97316; }
+        .hero p {
+            font-size: 1.05rem;
+            color: #6b7280;
+            max-width: 540px;
+            margin-bottom: 2rem;
+            line-height: 1.75;
+        }
+        .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+        /* Sections */
+        .section { padding: 4rem 0; border-top: 1px solid #f3f4f6; }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9ca3af;
+            margin-bottom: 0.6rem;
+        }
+
+        .section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #111827;
+            margin-bottom: 1rem;
+            max-width: 560px;
+        }
+
+        .section > .container > p {
+            font-size: 0.95rem;
+            color: #4b5563;
+            max-width: 620px;
+            line-height: 1.8;
+            margin-bottom: 0.85rem;
+        }
+
+        /* Pain points grid */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
+
+        .card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .card-num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f97316;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.35rem;
+        }
+
+        .card-text {
+            font-size: 0.82rem;
+            color: #6b7280;
+            line-height: 1.65;
+        }
+
+        /* Tool cards */
+        .tool-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .tool-preview {
+            height: 180px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .preview-dark { background: #1e1e2e; }
+        .preview-light { background: #f9fafb; }
+
+        .preview-row {
+            height: 5px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.15);
+            margin-bottom: 5px;
+        }
+        .preview-row-short { width: 65%; background: rgba(255,255,255,0.09); }
+
+        .preview-mini-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .preview-mini-col {
+            background: rgba(255,255,255,0.07);
+            border-radius: 5px;
+            padding: 6px;
+        }
+
+        .mini-line {
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.18);
+            margin-bottom: 4px;
+        }
+        .mini-line-short { width: 60%; background: rgba(255,255,255,0.1); }
+
+        /* Vitamins preview */
+        .preview-vitamins { display: flex; flex-direction: column; gap: 6px; }
+        .v-bar {
+            height: 26px;
+            border-radius: 0 6px 6px 0;
+            border-left: 3px solid;
+        }
+        .v-challenge { background: #fff7ed; border-color: #f97316; }
+        .v-support   { background: #f0fdf4; border-color: #22c55e; }
+        .v-reflect   { background: #eef2ff; border-color: #6366f1; }
+
+        .preview-scenario {
+            background: #1e1e2e;
+            border-radius: 7px;
+            padding: 0.65rem 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-scenario-label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #f59e0b;
+            margin-bottom: 4px;
+        }
+
+        .tool-body { padding: 1.25rem; border-top: 1px solid #f3f4f6; }
+        .tool-name { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.35rem; }
+        .tool-desc { font-size: 0.82rem; color: #6b7280; line-height: 1.65; margin-bottom: 1rem; }
+
+        /* Vitamins section */
+        .vitamins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+
+        .vcard {
+            padding: 1.1rem 1.1rem 1.1rem 1.25rem;
+            border-radius: 0 10px 10px 0;
+            border-left: 4px solid;
+        }
+        .vcard-c { background: #fff7ed; border-color: #f97316; }
+        .vcard-s { background: #f0fdf4; border-color: #22c55e; }
+        .vcard-r { background: #eef2ff; border-color: #6366f1; }
+
+        .vcard-label {
+            font-size: 0.62rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.4rem;
+        }
+        .vcard-c .vcard-label { color: #c2410c; }
+        .vcard-s .vcard-label { color: #15803d; }
+        .vcard-r .vcard-label { color: #4338ca; }
+        .vcard-text { font-size: 0.82rem; color: #374151; line-height: 1.65; }
+
+        /* Quotes */
+        .quote {
+            background: #f9fafb;
+            border-left: 4px solid #6366f1;
+            border-radius: 0 10px 10px 0;
+            padding: 1.1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .quote-orange { border-color: #f97316; }
+
+        .quote-text {
+            font-size: 0.95rem;
+            color: #111827;
+            font-style: italic;
+            line-height: 1.75;
+            margin-bottom: 0.5rem;
+        }
+
+        .quote-attr {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            font-weight: 600;
+        }
+
+        /* About / dark section */
+        .dark-section {
+            background: #1e1e2e;
+            padding: 3.5rem 0;
+        }
+
+        .dark-section .section-label { color: #f59e0b; }
+
+        .dark-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f3f4f6;
+            margin-bottom: 0.75rem;
+        }
+
+        .dark-section p {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            max-width: 560px;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .dark-links { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+        .dark-link {
+            font-size: 0.82rem;
+            color: #818cf8;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.45rem 0.85rem;
+            background: rgba(99,102,241,0.12);
+            border-radius: 6px;
+            transition: background 0.15s;
+        }
+        .dark-link:hover { background: rgba(99,102,241,0.22); }
+
+        .dark-link-orange {
+            color: #fb923c;
+            background: rgba(249,115,22,0.12);
+        }
+        .dark-link-orange:hover { background: rgba(249,115,22,0.22); }
+
+        /* Footer */
+        footer {
+            padding: 1.5rem 0;
+            border-top: 1px solid #f3f4f6;
+            text-align: center;
+        }
+        footer p { font-size: 0.75rem; color: #9ca3af; }
+
+        /* Responsive */
+        @media (max-width: 680px) {
+            .hero h1 { font-size: 1.9rem; }
+            .grid-3, .vitamins-grid { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="container">
+        <a href="#" class="nav-logo">Clueless Consultant</a>
+        <div class="nav-links">
+            <a href="#tools">Tools</a>
+            <a href="#research">Research</a>
+            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-orange">Try the Coach</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <span class="tag tag-amber">Built with Claude &nbsp;·&nbsp; Grounded in Research</span>
+        <h1>The gap between knowing consulting and <em>thinking like one</em></h1>
+        <p>
+            Junior consultants do not fail because they are not capable.
+            They fail because nobody has time to show them what good looks like,
+            and they do not know what questions to ask.
+            Two AI tools built to fix that.
+        </p>
+        <div class="hero-cta">
+            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-orange">Try the Coach</a>
+            <a href="https://clueful-consultant.streamlit.app/" target="_blank" class="btn btn-indigo">Try the Structurer</a>
+        </div>
+    </div>
+</section>
+
+<!-- Problem -->
+<section class="section">
+    <div class="container">
+        <div class="section-label">The Problem</div>
+        <h2>Why junior consultants struggle in year one</h2>
+        <p>
+            It is not a skills gap. It is a structured thinking gap, compounded by a psychological safety problem.
+            Junior consultants do not know what they do not know, so they cannot ask the right questions.
+            Senior consultants do not have time to teach. The gap compounds silently until it is too late.
+        </p>
+        <p>
+            Accenture CEO Julie Sweet: <em>"We will hire into more entry-level jobs this year than last.
+            But the skills we require and the way we are onboarding those individuals is fundamentally different."</em>
+            Nobody has built what that different onboarding looks like.
+        </p>
+
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-num">01</div>
+                <div class="card-title">No straw man instinct</div>
+                <div class="card-text">Senior consultants see the end output before they start. Juniors do not, and nobody teaches them to work backwards from the final slide.</div>
+            </div>
+            <div class="card">
+                <div class="card-num">02</div>
+                <div class="card-title">Vocabulary without context</div>
+                <div class="card-text">You learn what MECE means. You do not learn to apply it under pressure, in a client meeting, when the senior partner is watching.</div>
+            </div>
+            <div class="card">
+                <div class="card-num">03</div>
+                <div class="card-title">No safe space to be wrong</div>
+                <div class="card-text">There is no place to practise being wrong before the high-stakes moment. These tools are that space.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tools -->
+<section class="section" id="tools">
+    <div class="container">
+        <div class="section-label">The Tools</div>
+        <h2>Two tools. One narrative.</h2>
+        <p>
+            The Structurer shows what a senior consultant's brain produces.
+            The Coach trains you to produce it yourself.
+            One is the destination. The other is the path.
+        </p>
+
+        <div class="grid-2">
+
+            <!-- Structurer -->
+            <div class="tool-card">
+                <div class="tool-preview preview-dark">
+                    <div>
+                        <span style="display:inline-block;background:#d1fae5;color:#065f46;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.15rem 0.5rem;border-radius:4px;margin-bottom:8px;">Strategy / Product</span>
+                        <div class="preview-row"></div>
+                        <div class="preview-row preview-row-short"></div>
+                    </div>
+                    <div class="preview-mini-grid">
+                        <div class="preview-mini-col">
+                            <div class="mini-line"></div>
+                            <div class="mini-line mini-line-short"></div>
+                            <div class="mini-line mini-line-short" style="width:45%;"></div>
+                        </div>
+                        <div class="preview-mini-col">
+                            <div class="mini-line"></div>
+                            <div class="mini-line mini-line-short"></div>
+                            <div class="mini-line mini-line-short" style="width:55%;"></div>
+                        </div>
+                        <div class="preview-mini-col">
+                            <div class="mini-line"></div>
+                            <div class="mini-line mini-line-short"></div>
+                            <div class="mini-line mini-line-short" style="width:40%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-body">
+                    <div class="tool-name">Consulting Problem Structurer</div>
+                    <div class="tool-desc">Paste any messy client statement. Get a MECE issue tree, three leading hypotheses, and first-meeting diagnostic questions. This is what structured thinking looks like.</div>
+                    <a href="https://clueful-consultant.streamlit.app/" target="_blank" class="btn btn-indigo" style="font-size:0.8rem;padding:0.45rem 0.9rem;">Open Structurer</a>
+                </div>
+            </div>
+
+            <!-- Coach -->
+            <div class="tool-card">
+                <div class="tool-preview preview-light">
+                    <div class="preview-scenario">
+                        <div class="preview-scenario-label">Client situation</div>
+                        <div class="preview-row" style="background:rgba(255,255,255,0.2);height:4px;margin-bottom:3px;"></div>
+                        <div class="preview-row preview-row-short" style="background:rgba(255,255,255,0.12);height:4px;"></div>
+                    </div>
+                    <div class="preview-vitamins">
+                        <div class="v-bar v-challenge"></div>
+                        <div class="v-bar v-support"></div>
+                        <div class="v-bar v-reflect"></div>
+                    </div>
+                </div>
+                <div class="tool-body">
+                    <div class="tool-name">Clueless Consultant Coach</div>
+                    <div class="tool-desc">You get the scenario. You classify, hypothesise, ask. Claude tells you where your thinking breaks down -- Challenge first, Support second, Reflection last. By design.</div>
+                    <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-orange" style="font-size:0.8rem;padding:0.45rem 0.9rem;">Open Coach</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Framework -->
+<section class="section">
+    <div class="container">
+        <div class="section-label">The Framework</div>
+        <h2>Why challenge comes first</h2>
+        <p>
+            Most AI tools only support. They validate, agree, encourage.
+            Jazz Rasool -- founder of the AI Coaching Alliance, author of Coaching 5.0, TEDx speaker --
+            calls this pathological. Sycophantic AI leads to atrophy, not growth.
+        </p>
+        <p>
+            The Social Vitamins framework: three things people need to grow, in the right proportion,
+            at the right time, from the right source. This tool is built on that architecture.
+        </p>
+        <div class="vitamins-grid">
+            <div class="vcard vcard-c">
+                <div class="vcard-label">Challenge</div>
+                <div class="vcard-text">What is wrong with your thinking. Directly. Referencing your actual words. No softening. This is where growth happens.</div>
+            </div>
+            <div class="vcard vcard-s">
+                <div class="vcard-label">Support</div>
+                <div class="vcard-text">What you genuinely got right. Specific, not generic. "Good attempt" is not coaching. Real acknowledgment only.</div>
+            </div>
+            <div class="vcard vcard-r">
+                <div class="vcard-label">Reflection</div>
+                <div class="vcard-text">One open question. The answer is not given. You have to find it. That is how understanding is actually built.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Research -->
+<section class="section" id="research">
+    <div class="container">
+        <div class="section-label">The Research</div>
+        <h2>Grounded in published work</h2>
+        <p>
+            This is not a weekend project. It emerges from research into emotional intelligence,
+            AI-assisted tools, and psychological safety in intercultural consulting teams --
+            published in the GILE Journal of Skills Development.
+        </p>
+
+        <div class="quote">
+            <div class="quote-text">
+                "The inability for AI -- in a proportionate and timely way -- to provide support,
+                challenge, and reflection is what is leading to the biggest social problems people
+                are encountering with AI. But also in the workplace."
+            </div>
+            <div class="quote-attr">Jazz Rasool &nbsp;·&nbsp; Founder, AI Coaching Alliance &nbsp;·&nbsp; Author, Coaching 5.0 &nbsp;·&nbsp; TEDx Speaker</div>
+        </div>
+
+        <div class="quote quote-orange">
+            <div class="quote-text">
+                "We will hire into more entry-level jobs this year than last year.
+                But the skills we require and the way we are onboarding those individuals
+                is fundamentally different."
+            </div>
+            <div class="quote-attr">Julie Sweet &nbsp;·&nbsp; Chair and CEO, Accenture</div>
+        </div>
+
+        <p>
+            The research question: how do professionals in intercultural, cross-functional teams
+            describe the role of AI-assisted tools in shaping communication and fostering
+            psychological safety? The Clueless Consultant is one answer to that question in practice.
+        </p>
+    </div>
+</section>
+
+<!-- About -->
+<section class="dark-section" id="about">
+    <div class="container">
+        <div class="section-label">Built by</div>
+        <h2>Antony Mervyn Shreyas</h2>
+        <p>
+            Published researcher in emotional intelligence, AI, and psychological safety
+            in intercultural consulting workplaces. Former Accenture consultant.
+            Building the onboarding layer that consulting firms have not built yet.
+        </p>
+        <p>
+            Berlin, 2025.
+        </p>
+        <div class="dark-links">
+            <a href="https://gjsd.gile-edu.org/index.php/home/article/view/13-shreyas-shtaltovna-150-170" target="_blank" class="dark-link">Published Paper</a>
+            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="dark-link dark-link-orange">Try the Coach</a>
+            <a href="https://clueful-consultant.streamlit.app/" target="_blank" class="dark-link">Try the Structurer</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>Clueless Consultant &nbsp;·&nbsp; Built with Claude &nbsp;·&nbsp; 2025</p>
+    </div>
+</footer>
+
+</body>
+</html>
