@@ -4,331 +4,243 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clueless Consultant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #F1F2EE;
+            --panel: #FFFFFF;
+            --ink: #16232F;
+            --body-c: #3A3D3B;
+            --faint: #767A72;
+            --line: #D7D9D2;
+
+            --red: #C1443B;
+            --red-soft: #F3DEDB;
+            --green: #2F7355;
+            --green-soft: #DCE7DF;
+            --blue: #2A5C8A;
+            --blue-soft: #DBE4EA;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
-            color: #111827;
-            background: #ffffff;
-            line-height: 1.6;
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--body-c);
+            background: var(--bg);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
         }
 
+        .display { font-family: 'Space Grotesk', sans-serif; }
+
+        a { color: var(--blue); }
+        :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
         .container {
-            max-width: 880px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
         /* Nav */
         nav {
-            padding: 1.25rem 0;
-            border-bottom: 1px solid #f3f4f6;
+            padding: 1.1rem 0;
+            border-bottom: 1px solid var(--line);
             position: sticky;
             top: 0;
-            background: rgba(255,255,255,0.95);
+            background: rgba(241,242,238,0.88);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 100;
         }
         nav .container { display: flex; align-items: center; justify-content: space-between; }
-        .nav-logo { font-size: 1rem; font-weight: 700; color: #111827; text-decoration: none; letter-spacing: -0.02em; }
-        .nav-links { display: flex; gap: 1.25rem; align-items: center; }
-        .nav-links a { font-size: 0.85rem; color: #6b7280; text-decoration: none; font-weight: 500; }
-        .nav-links a:hover { color: #111827; }
+        .nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+        .nav-links { display: flex; gap: 1.75rem; align-items: center; }
+        .nav-links a:not(.btn) {
+            font-size: 0.88rem; color: var(--body-c); text-decoration: none; font-weight: 500;
+            position: relative; transition: color 0.15s ease;
+        }
+        .nav-links a:not(.btn)::after {
+            content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
+            background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform 0.2s ease;
+        }
+        .nav-links a:not(.btn):hover { color: var(--ink); }
+        .nav-links a:not(.btn):hover::after, .nav-links a:not(.btn):focus-visible::after { transform: scaleX(1); }
+
+        .lang-toggle { display: flex; gap: 0.4rem; align-items: center; font-size: 0.8rem; font-weight: 600; }
+        .lang-btn {
+            background: none; border: none; cursor: pointer; padding: 0.2rem 0.35rem;
+            color: var(--faint); font-family: 'IBM Plex Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+        }
+        .lang-btn.active { color: var(--ink); }
+        .lang-btn:hover { color: var(--ink); }
+        .lang-sep { color: var(--line); }
 
         /* Buttons */
         .btn {
             display: inline-block;
-            padding: 0.55rem 1.1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            padding: 0.65rem 1.3rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.88rem;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            transition: opacity 0.15s, transform 0.1s;
+            border: none;
+            transition: transform 0.15s ease, background-color 0.15s ease;
         }
-        .btn:hover { opacity: 0.88; transform: translateY(-1px); }
-        .btn-orange { background: #f97316; color: #fff; }
-        .btn-indigo { background: #6366f1; color: #fff; }
-        .btn-ghost  { background: #f3f4f6; color: #374151; }
-
-        /* Tags */
-        .tag {
-            display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 0.2rem 0.75rem;
-            border-radius: 999px;
-            margin-bottom: 1rem;
-        }
-        .tag-amber  { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
-        .tag-indigo { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+        .btn:hover { transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .btn-primary { background: var(--green); color: var(--bg); }
+        .btn-primary:hover { background: #245C44; }
+        .btn-secondary { background: var(--blue); color: var(--bg); }
+        .btn-secondary:hover { background: #1F4A70; }
 
         /* Hero */
-        .hero { padding: 5rem 0 4rem; }
+        .hero { padding: 4.5rem 0 5rem; }
+        .hero .container { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center; }
         .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 1.15;
-            color: #111827;
-            max-width: 680px;
-            margin-bottom: 1.25rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+            color: var(--ink);
+            margin-bottom: 1.3rem;
         }
-        .hero h1 em { font-style: normal; color: #f97316; }
         .hero p {
-            font-size: 1.05rem;
-            color: #6b7280;
-            max-width: 540px;
-            margin-bottom: 2rem;
+            font-size: 1rem;
+            color: var(--body-c);
+            max-width: 46ch;
+            margin-bottom: 1.9rem;
             line-height: 1.75;
         }
         .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .hero-tree { width: 100%; height: auto; }
+        @media (max-width: 760px) {
+            .hero .container { grid-template-columns: 1fr; }
+            .hero-tree { max-width: 420px; }
+        }
 
         /* Sections */
-        .section { padding: 4rem 0; border-top: 1px solid #f3f4f6; }
-
-        .section-label {
-            font-size: 0.68rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #9ca3af;
-            margin-bottom: 0.6rem;
-        }
-
+        .section { padding: 4rem 0; border-top: 1px solid var(--line); }
         .section h2 {
-            font-size: 1.75rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.35rem, 2.4vw, 1.6rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            color: #111827;
-            margin-bottom: 1rem;
-            max-width: 560px;
+            letter-spacing: -0.01em;
+            color: var(--ink);
+            margin-bottom: 1.1rem;
+            max-width: 42ch;
         }
-
         .section > .container > p {
-            font-size: 0.95rem;
-            color: #4b5563;
-            max-width: 620px;
+            font-size: 0.96rem;
+            color: var(--body-c);
+            max-width: 68ch;
             line-height: 1.8;
             margin-bottom: 0.85rem;
         }
 
-        /* Pain points grid */
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
-
-        .card {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 1.25rem;
+        /* Branch list (issue-tree structured list, no numbering) */
+        .branch-list { margin-top: 2.25rem; border-left: 1.5px solid var(--line); max-width: 640px; }
+        .branch-item { position: relative; padding: 0 0 1.75rem 1.9rem; }
+        .branch-item:last-child { padding-bottom: 0; }
+        .branch-item::before {
+            content: ''; position: absolute; left: 0; top: 0.6rem; width: 1.3rem; height: 1.5px; background: var(--line);
         }
+        .branch-item-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; color: var(--ink); margin-bottom: 0.35rem; }
+        .branch-item-text { font-size: 0.9rem; color: var(--body-c); line-height: 1.7; max-width: 56ch; }
 
-        .card-num {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #f97316;
-            margin-bottom: 0.4rem;
+        /* Tools */
+        .tools-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+        @media (max-width: 720px) { .tools-row { grid-template-columns: 1fr; } }
+
+        .tool-panel-preview { height: 168px; padding: 1.1rem; position: relative; overflow: hidden; }
+
+        /* Coach preview: whiteboard */
+        .preview-whiteboard { background: var(--ink); }
+        .wb-line { height: 5px; border-radius: 2px; background: rgba(255,255,255,0.14); margin-bottom: 6px; }
+        .wb-line-short { width: 60%; background: rgba(255,255,255,0.08); }
+        .wb-cursor { display: inline-block; width: 2px; height: 9px; background: rgba(255,255,255,0.5); vertical-align: middle; animation: blink 1.1s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .wb-bars { display: flex; flex-direction: column; gap: 7px; margin-top: 14px; }
+        .wb-bar { height: 22px; border-radius: 0 4px 4px 0; border-left: 3px solid; display: flex; align-items: center; padding-left: 0.6rem; font-size: 0.62rem; font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+        .wb-bar-c { background: rgba(193,68,59,0.16); border-color: var(--red); color: #E8ABA5; }
+        .wb-bar-s { background: rgba(47,115,85,0.16); border-color: var(--green); color: #9FC7AE; }
+        .wb-bar-r { background: rgba(42,92,138,0.16); border-color: var(--blue); color: #A9C4DB; }
+
+        /* Deutsch preview: notebook */
+        .preview-notebook {
+            background: var(--panel);
+            background-image: repeating-linear-gradient(to bottom, transparent 0 26px, var(--line) 26px 27px);
+            background-position: 0 6px;
         }
-
-        .card-title {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 0.35rem;
+        .preview-notebook::before {
+            content: ''; position: absolute; left: 34px; top: 0; bottom: 0; width: 1px; background: #D9AFAF;
         }
-
-        .card-text {
-            font-size: 0.82rem;
-            color: #6b7280;
-            line-height: 1.65;
+        .nb-entry { margin-left: 46px; font-size: 0.78rem; margin-bottom: 1.05rem; }
+        .nb-de { font-weight: 600; color: var(--ink); }
+        .nb-en { color: var(--faint); font-style: italic; }
+        .nb-tag {
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.62rem; font-weight: 600;
+            color: var(--green); text-transform: none; margin-bottom: 0.3rem;
         }
+        .nb-idiom { font-weight: 600; color: var(--ink); font-size: 0.92rem; }
 
-        /* Tool cards */
-        .tool-card {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            overflow: hidden;
+        .tool-body { padding: 1.3rem 0.1rem 0; }
+        .tool-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+        .tool-desc { font-size: 0.87rem; color: var(--body-c); line-height: 1.7; margin-bottom: 1.15rem; max-width: 46ch; }
+
+        /* Vitamins (structured typographic treatment, not card kit) */
+        .vitamin-row { display: flex; gap: 2.25rem; margin-top: 2.5rem; flex-wrap: wrap; }
+        .vitamin {
+            flex: 1 1 220px; border-top: 3px solid var(--v-color); padding-top: 1rem; cursor: pointer;
         }
-
-        .tool-preview {
-            height: 180px;
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .vitamin:focus-visible { outline-offset: 6px; }
+        .vitamin-c { --v-color: var(--red); }
+        .vitamin-s { --v-color: var(--green); }
+        .vitamin-r { --v-color: var(--blue); }
+        .vitamin-label { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.98rem; color: var(--v-color); margin-bottom: 0.5rem; }
+        .vitamin-text { font-size: 0.87rem; color: var(--body-c); line-height: 1.7; }
+        .vitamin-hint { font-size: 0.78rem; color: var(--faint); margin-top: 0.7rem; font-style: italic; }
+        .vitamin-example {
+            max-height: 0; opacity: 0; overflow: hidden; margin-top: 0;
+            font-size: 0.82rem; color: var(--body-c); font-style: italic; line-height: 1.65;
+            transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease;
         }
+        .vitamin.expanded .vitamin-example { max-height: 220px; opacity: 1; margin-top: 0.7rem; }
+        .vitamin.expanded .vitamin-hint { display: none; }
 
-        .preview-dark { background: #1e1e2e; }
-        .preview-light { background: #f9fafb; }
-
-        .preview-row {
-            height: 5px;
-            border-radius: 3px;
-            background: rgba(255,255,255,0.15);
-            margin-bottom: 5px;
+        /* Pull quotes (editorial, not card kit) */
+        .pull-quote { margin: 1.8rem 0; padding-left: 1.6rem; border-left: 3px solid var(--ink); max-width: 62ch; }
+        .pull-quote.pq-red { border-color: var(--red); }
+        .pull-quote-text {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.08rem; font-weight: 500;
+            color: var(--ink); line-height: 1.5; margin-bottom: 0.6rem;
         }
-        .preview-row-short { width: 65%; background: rgba(255,255,255,0.09); }
-
-        .preview-mini-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .preview-mini-col {
-            background: rgba(255,255,255,0.07);
-            border-radius: 5px;
-            padding: 6px;
-        }
-
-        .mini-line {
-            height: 3px;
-            border-radius: 2px;
-            background: rgba(255,255,255,0.18);
-            margin-bottom: 4px;
-        }
-        .mini-line-short { width: 60%; background: rgba(255,255,255,0.1); }
-
-        /* Vitamins preview */
-        .preview-vitamins { display: flex; flex-direction: column; gap: 6px; }
-        .v-bar {
-            height: 26px;
-            border-radius: 0 6px 6px 0;
-            border-left: 3px solid;
-        }
-        .v-challenge { background: #fff7ed; border-color: #f97316; }
-        .v-support   { background: #f0fdf4; border-color: #22c55e; }
-        .v-reflect   { background: #eef2ff; border-color: #6366f1; }
-
-        .preview-scenario {
-            background: #1e1e2e;
-            border-radius: 7px;
-            padding: 0.65rem 0.85rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .preview-scenario-label {
-            font-size: 0.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #f59e0b;
-            margin-bottom: 4px;
-        }
-
-        .tool-body { padding: 1.25rem; border-top: 1px solid #f3f4f6; }
-        .tool-name { font-size: 1rem; font-weight: 700; color: #111827; margin-bottom: 0.35rem; }
-        .tool-desc { font-size: 0.82rem; color: #6b7280; line-height: 1.65; margin-bottom: 1rem; }
-
-        /* Vitamins section */
-        .vitamins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
-
-        .vcard {
-            padding: 1.1rem 1.1rem 1.1rem 1.25rem;
-            border-radius: 0 10px 10px 0;
-            border-left: 4px solid;
-        }
-        .vcard-c { background: #fff7ed; border-color: #f97316; }
-        .vcard-s { background: #f0fdf4; border-color: #22c55e; }
-        .vcard-r { background: #eef2ff; border-color: #6366f1; }
-
-        .vcard-label {
-            font-size: 0.62rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.4rem;
-        }
-        .vcard-c .vcard-label { color: #c2410c; }
-        .vcard-s .vcard-label { color: #15803d; }
-        .vcard-r .vcard-label { color: #4338ca; }
-        .vcard-text { font-size: 0.82rem; color: #374151; line-height: 1.65; }
-
-        /* Quotes */
-        .quote {
-            background: #f9fafb;
-            border-left: 4px solid #6366f1;
-            border-radius: 0 10px 10px 0;
-            padding: 1.1rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .quote-orange { border-color: #f97316; }
-
-        .quote-text {
-            font-size: 0.95rem;
-            color: #111827;
-            font-style: italic;
-            line-height: 1.75;
-            margin-bottom: 0.5rem;
-        }
-
-        .quote-attr {
-            font-size: 0.75rem;
-            color: #9ca3af;
-            font-weight: 600;
-        }
+        .pull-quote-attr { font-size: 0.85rem; color: var(--faint); }
 
         /* About / dark section */
-        .dark-section {
-            background: #1e1e2e;
-            padding: 3.5rem 0;
-        }
-
-        .dark-section .section-label { color: #f59e0b; }
-
-        .dark-section h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #f3f4f6;
-            margin-bottom: 0.75rem;
-        }
-
-        .dark-section p {
-            font-size: 0.9rem;
-            color: #9ca3af;
-            max-width: 560px;
-            line-height: 1.8;
-            margin-bottom: 0.75rem;
-        }
-
+        .dark-section { background: var(--ink); padding: 3.75rem 0; }
+        .dark-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--bg); margin-bottom: 0.9rem; }
+        .dark-section p { font-size: 0.92rem; color: #B7C0C8; max-width: 60ch; line-height: 1.8; margin-bottom: 0.75rem; }
         .dark-links { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
-
         .dark-link {
-            font-size: 0.82rem;
-            color: #818cf8;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.45rem 0.85rem;
-            background: rgba(99,102,241,0.12);
-            border-radius: 6px;
-            transition: background 0.15s;
+            font-size: 0.85rem; color: #A9C4DB; text-decoration: none; font-weight: 600;
+            padding: 0.5rem 0; border-bottom: 1px solid rgba(169,196,219,0.35); transition: border-color 0.15s ease;
         }
-        .dark-link:hover { background: rgba(99,102,241,0.22); }
-
-        .dark-link-orange {
-            color: #fb923c;
-            background: rgba(249,115,22,0.12);
-        }
-        .dark-link-orange:hover { background: rgba(249,115,22,0.22); }
+        .dark-link:hover { border-color: #A9C4DB; }
+        .dark-link-primary { color: #9FC7AE; border-bottom-color: rgba(159,199,174,0.35); }
+        .dark-link-primary:hover { border-color: #9FC7AE; }
 
         /* Footer */
-        footer {
-            padding: 1.5rem 0;
-            border-top: 1px solid #f3f4f6;
-            text-align: center;
-        }
-        footer p { font-size: 0.75rem; color: #9ca3af; }
+        footer { padding: 1.6rem 0; border-top: 1px solid var(--line); text-align: left; }
+        footer p { font-size: 0.8rem; color: var(--faint); }
 
-        /* Responsive */
-        @media (max-width: 680px) {
-            .hero h1 { font-size: 1.9rem; }
-            .grid-3, .vitamins-grid { grid-template-columns: 1fr; }
-            .grid-2 { grid-template-columns: 1fr; }
+        @media (prefers-reduced-motion: reduce) {
+            .wb-cursor { animation: none; opacity: 1; }
         }
     </style>
 </head>
@@ -339,9 +251,14 @@
     <div class="container">
         <a href="#" class="nav-logo">Clueless Consultant</a>
         <div class="nav-links">
-            <a href="#tools">Tools</a>
-            <a href="#research">Research</a>
-            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-orange">Try the Coach</a>
+            <a href="#tools" data-de="Tools">Tools</a>
+            <a href="#research" data-de="Forschung">Research</a>
+            <div class="lang-toggle">
+                <button class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+                <span class="lang-sep">/</span>
+                <button class="lang-btn" data-lang="de" aria-pressed="false">DE</button>
+            </div>
+            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-primary" data-de="Coach ausprobieren">Try the Coach</a>
         </div>
     </div>
 </nav>
@@ -349,51 +266,87 @@
 <!-- Hero -->
 <section class="hero">
     <div class="container">
-        <span class="tag tag-amber">Built with Claude &nbsp;·&nbsp; Grounded in Research</span>
-        <h1>The gap between knowing consulting and <em>thinking like one</em></h1>
-        <p>
-            The problem isn't that senior consultants won't help.
-            It's that junior consultants don't know what questions to ask yet.
-            You can't ask for help when you don't know what you're missing.
-            An AI coach built to fix that.
-        </p>
-        <div class="hero-cta">
-            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-orange">Try the Coach</a>
+        <div>
+            <h1 data-de="Junior-Berater scheitern nicht am Wissen. Sie scheitern an der Struktur.">Junior consultants don't fail on knowledge. They fail on structure.</h1>
+            <p data-de="Niemand bringt dir bei, eine Hypothese zu testen, bevor du sie präsentierst, oder zu merken, dass du die falsche Frage beantwortest. Dieses Tool übt genau dieses Scheitern mit dir, bevor ein Kunde es sieht.">
+                Nobody teaches you to test a hypothesis before you present it, or to notice
+                you're answering the wrong question. This tool practises that specific failure
+                with you, before a client sees it.
+            </p>
+            <div class="hero-cta">
+                <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-primary" data-de="Coach ausprobieren">Try the Coach</a>
+            </div>
         </div>
+        <svg class="hero-tree" viewBox="0 0 460 300" xmlns="http://www.w3.org/2000/svg" aria-label="Example issue tree: profit is down, split into revenue and cost hypotheses" role="img">
+            <g id="tree-lines" fill="none" stroke="#767A72" stroke-width="1.5">
+                <path d="M100,150 L180,80" id="l1"/>
+                <path d="M100,150 L180,220" id="l2"/>
+                <path d="M220,80 L320,40" id="l3"/>
+                <path d="M220,80 L320,120" id="l4"/>
+                <path d="M220,220 L320,180" id="l5"/>
+                <path d="M220,220 L320,260" id="l6"/>
+            </g>
+            <g id="tree-nodes" font-family="IBM Plex Sans, sans-serif">
+                <g id="n-root">
+                    <rect x="6" y="130" width="94" height="40" rx="3" fill="#16232F"/>
+                    <text x="53" y="154" text-anchor="middle" font-size="12" fill="#F1F2EE" data-de="Gewinn sinkt">Profit is down</text>
+                </g>
+                <g id="n-rev">
+                    <rect x="180" y="60" width="80" height="40" rx="3" fill="#FFFFFF" stroke="#D7D9D2"/>
+                    <text x="220" y="84" text-anchor="middle" font-size="12" fill="#16232F" data-de="Umsatz">Revenue</text>
+                </g>
+                <g id="n-cost">
+                    <rect x="180" y="200" width="80" height="40" rx="3" fill="#FFFFFF" stroke="#D7D9D2"/>
+                    <text x="220" y="224" text-anchor="middle" font-size="12" fill="#16232F" data-de="Kosten">Cost</text>
+                </g>
+                <g id="n-price">
+                    <rect x="320" y="20" width="80" height="40" rx="3" fill="#F3DEDB" stroke="#C1443B"/>
+                    <text x="360" y="38" text-anchor="middle" font-size="11.5" fill="#7A2A23" data-de="Preis">Price</text>
+                    <text x="360" y="52" text-anchor="middle" font-size="8.5" fill="#7A2A23" data-de="noch nicht geprüft">not yet tested</text>
+                </g>
+                <g id="n-volume">
+                    <rect x="320" y="100" width="80" height="40" rx="3" fill="#FFFFFF" stroke="#D7D9D2"/>
+                    <text x="360" y="124" text-anchor="middle" font-size="12" fill="#16232F" data-de="Menge">Volume</text>
+                </g>
+                <g id="n-fixed">
+                    <rect x="320" y="160" width="80" height="40" rx="3" fill="#FFFFFF" stroke="#D7D9D2"/>
+                    <text x="360" y="184" text-anchor="middle" font-size="12" fill="#16232F" data-de="Fixkosten">Fixed</text>
+                </g>
+                <g id="n-var">
+                    <rect x="320" y="240" width="80" height="40" rx="3" fill="#FFFFFF" stroke="#D7D9D2"/>
+                    <text x="360" y="264" text-anchor="middle" font-size="12" fill="#16232F" data-de="Variable Kosten">Variable</text>
+                </g>
+            </g>
+        </svg>
     </div>
 </section>
 
 <!-- Problem -->
 <section class="section">
     <div class="container">
-        <div class="section-label">The Problem</div>
-        <h2>Why junior consultants struggle in year one</h2>
-        <p>
+        <h2 data-de="Warum Junior-Berater im ersten Jahr scheitern">Why junior consultants struggle in year one</h2>
+        <p data-de="Es ist keine Wissenslücke. Es ist eine Lücke im strukturierten Denken, verschärft durch ein Problem der psychologischen Sicherheit. Junior-Berater wissen nicht, was sie nicht wissen, deshalb können sie nicht die richtigen Fragen stellen. Senior-Berater haben keine Zeit zum Lehren. Die Lücke wächst still, bis es zu spät ist.">
             It is not a skills gap. It is a structured thinking gap, compounded by a psychological safety problem.
             Junior consultants do not know what they do not know, so they cannot ask the right questions.
             Senior consultants do not have time to teach. The gap compounds silently until it is too late.
         </p>
-        <p>
-            Accenture CEO Julie Sweet: <em>"We will hire into more entry-level jobs this year than last.
-            But the skills we require and the way we are onboarding those individuals is fundamentally different."</em>
-            Nobody has built what that different onboarding looks like.
+        <p data-de="Beratungsfirmen stellen mehr Berufseinsteiger ein und kürzen gleichzeitig die Zeit, die Senior-Berater früher für deren Ausbildung hatten. Niemand hat einen Ersatz für dieses fehlende Training gebaut.">
+            Consulting firms are hiring more entry-level people while cutting the senior time it used to take
+            to train them. Nobody has built the replacement for that missing training.
         </p>
 
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-num">01</div>
-                <div class="card-title">No straw man instinct</div>
-                <div class="card-text">Senior consultants see the end output before they start. Juniors do not, and nobody teaches them to work backwards from the final slide.</div>
+        <div class="branch-list">
+            <div class="branch-item">
+                <div class="branch-item-title" data-de="Kein Gespür für das Endergebnis">No straw man instinct</div>
+                <div class="branch-item-text" data-de="Senior-Berater sehen das Endergebnis, bevor sie anfangen. Junior-Berater nicht, und niemand bringt ihnen bei, von der letzten Folie rückwärts zu denken.">Senior consultants see the end output before they start. Juniors do not, and nobody teaches them to work backwards from the final slide.</div>
             </div>
-            <div class="card">
-                <div class="card-num">02</div>
-                <div class="card-title">Vocabulary without context</div>
-                <div class="card-text">You learn what MECE means. You do not learn to apply it under pressure, in a client meeting, when the senior partner is watching.</div>
+            <div class="branch-item">
+                <div class="branch-item-title" data-de="Vokabular ohne Kontext">Vocabulary without context</div>
+                <div class="branch-item-text" data-de="Du lernst, was MECE bedeutet. Du lernst nicht, es unter Druck anzuwenden, in einem Kundenmeeting, wenn der Senior Partner zusieht.">You learn what MECE means. You do not learn to apply it under pressure, in a client meeting, when the senior partner is watching.</div>
             </div>
-            <div class="card">
-                <div class="card-num">03</div>
-                <div class="card-title">No safe space to be wrong</div>
-                <div class="card-text">There is no place to practise being wrong before the high-stakes moment. These tools are that space.</div>
+            <div class="branch-item">
+                <div class="branch-item-title" data-de="Kein sicherer Raum für Fehler">No safe space to be wrong</div>
+                <div class="branch-item-text" data-de="Es gibt keinen Ort, um Fehler zu üben, bevor es wirklich zählt. Diese Tools sind dieser Ort.">There is no place to practise being wrong before the high-stakes moment. These tools are that space.</div>
             </div>
         </div>
     </div>
@@ -402,67 +355,46 @@
 <!-- Tools -->
 <section class="section" id="tools">
     <div class="container">
-        <div class="section-label">The Tools</div>
-        <h2>Built for two different gaps</h2>
-        <p>
+        <h2 data-de="Für zwei verschiedene Lücken gebaut">Built for two different gaps</h2>
+        <p data-de="Der Coach trainiert dich, wie ein Berater zu denken, bevor ein Kunde zusieht. Der Deutsch Trainer schließt eine Lücke, die ich selbst habe, jeden Tag, in der Sprache, die ich für die Arbeit in Deutschland brauche.">
             The Coach trains you to think like a consultant before a client is watching.
             The Deutsch Trainer closes a gap I have myself, every day, in the language I need to work in Germany.
-            Different domains, same habit: build the tool you actually need, not a demo of one.
         </p>
 
-        <div class="grid-2">
+        <div class="tools-row">
 
             <!-- Coach -->
-            <div class="tool-card">
-                <div class="tool-preview preview-light">
-                    <div class="preview-scenario">
-                        <div class="preview-scenario-label">Client situation</div>
-                        <div class="preview-row" style="background:rgba(255,255,255,0.2);height:4px;margin-bottom:3px;"></div>
-                        <div class="preview-row preview-row-short" style="background:rgba(255,255,255,0.12);height:4px;"></div>
-                    </div>
-                    <div class="preview-vitamins">
-                        <div class="v-bar v-challenge"></div>
-                        <div class="v-bar v-support"></div>
-                        <div class="v-bar v-reflect"></div>
+            <div>
+                <div class="tool-panel-preview preview-whiteboard">
+                    <div class="wb-line" style="width:70%;"></div>
+                    <div class="wb-line wb-line-short"></div><span class="wb-cursor"></span>
+                    <div class="wb-bars">
+                        <div class="wb-bar wb-bar-c" data-de="Herausfordern">Challenge</div>
+                        <div class="wb-bar wb-bar-s" data-de="Unterstützen">Support</div>
+                        <div class="wb-bar wb-bar-r" data-de="Reflektieren">Reflect</div>
                     </div>
                 </div>
                 <div class="tool-body">
                     <div class="tool-name">Clueless Consultant Coach</div>
-                    <div class="tool-desc">You get the scenario. You classify, hypothesise, ask. Claude tells you where your thinking breaks down -- Challenge first, Support second, Reflection last, by design. Reveal a MECE issue tree and model answer once you've committed to your own.</div>
-                    <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-orange" style="font-size:0.8rem;padding:0.45rem 0.9rem;">Open Coach</a>
+                    <div class="tool-desc" data-de="Du bekommst das Szenario. Du klassifizierst, stellst eine Hypothese auf, fragst nach. Claude zeigt dir, wo dein Denken bricht, zuerst Herausfordern, dann Unterstützen, zuletzt Reflektieren. Nach deinem eigenen Versuch zeigt es dir einen MECE-Baum und eine Musterlösung.">You get the scenario. You classify, hypothesise, ask. Claude tells you where your thinking breaks down, Challenge first, Support second, Reflection last. Reveal a MECE issue tree and model answer once you've committed to your own.</div>
+                    <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="btn btn-primary" data-de="Coach öffnen">Open Coach</a>
                 </div>
             </div>
 
             <!-- Deutsch Trainer -->
-            <div class="tool-card">
-                <div class="tool-preview preview-dark">
-                    <div>
-                        <span style="display:inline-block;background:#d1fae5;color:#065f46;font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:0.15rem 0.5rem;border-radius:4px;margin-bottom:8px;">Grammatik / Hören / Sprechen</span>
-                        <div class="preview-row"></div>
-                        <div class="preview-row preview-row-short"></div>
+            <div>
+                <div class="tool-panel-preview preview-notebook">
+                    <div class="nb-entry">
+                        <div class="nb-tag">Redewendung des Tages</div>
+                        <div class="nb-idiom">auf Wolke sieben schweben</div>
+                        <span class="nb-en">to be on cloud nine</span>
                     </div>
-                    <div class="preview-mini-grid">
-                        <div class="preview-mini-col">
-                            <div class="mini-line"></div>
-                            <div class="mini-line mini-line-short"></div>
-                            <div class="mini-line mini-line-short" style="width:45%;"></div>
-                        </div>
-                        <div class="preview-mini-col">
-                            <div class="mini-line"></div>
-                            <div class="mini-line mini-line-short"></div>
-                            <div class="mini-line mini-line-short" style="width:55%;"></div>
-                        </div>
-                        <div class="preview-mini-col">
-                            <div class="mini-line"></div>
-                            <div class="mini-line mini-line-short"></div>
-                            <div class="mini-line mini-line-short" style="width:40%;"></div>
-                        </div>
-                    </div>
+                    <div class="nb-entry"><span class="nb-de">Grammatik, Hören, Sprechen</span></div>
                 </div>
                 <div class="tool-body">
                     <div class="tool-name">Deutsch Trainer</div>
-                    <div class="tool-desc">Grammatik, Lesen, Hören, Schreiben, Sprechen, Vokabeln, Korrektur, built on real news and podcast feeds instead of textbook sentences. I use it daily to close my own C1 gap.</div>
-                    <a href="https://deutschlehrer777.streamlit.app/" target="_blank" class="btn btn-indigo" style="font-size:0.8rem;padding:0.45rem 0.9rem;">Open Deutsch Trainer</a>
+                    <div class="tool-desc" data-de="Grammatik, Lesen, Hören, Schreiben, Sprechen, Vokabeln, Korrektur, basierend auf echten Nachrichten- und Podcast-Feeds statt Lehrbuchsätzen. Ich nutze es täglich, um meine eigene C1-Lücke zu schließen.">Grammatik, Lesen, Hören, Schreiben, Sprechen, Vokabeln, Korrektur, built on real news and podcast feeds instead of textbook sentences. I use it daily to close my own C1 gap.</div>
+                    <a href="https://deutschlehrer777.streamlit.app/" target="_blank" class="btn btn-secondary" data-de="Deutsch Trainer öffnen">Open Deutsch Trainer</a>
                 </div>
             </div>
 
@@ -473,29 +405,34 @@
 <!-- Framework -->
 <section class="section">
     <div class="container">
-        <div class="section-label">The Framework</div>
-        <h2>Why challenge comes first</h2>
-        <p>
-            Most AI tools only support. They validate, agree, encourage.
-            Jazz Rasool -- founder of the AI Coaching Alliance, author of Coaching 5.0, TEDx speaker --
-            calls this pathological. Sycophantic AI leads to atrophy, not growth.
+        <h2 data-de="Warum Herausforderung zuerst kommt">Why challenge comes first</h2>
+        <p data-de="Die meisten KI-Tools unterstützen nur. Sie bestätigen, stimmen zu, ermutigen. Jazz Rasool, Gründer der AI Coaching Alliance und Autor von Coaching 5.0, nennt das pathologisch. Unterwürfige KI führt zu Stillstand, nicht zu Wachstum.">
+            Most AI tools only support. They validate, agree, encourage. Jazz Rasool, founder of the
+            AI Coaching Alliance and author of Coaching 5.0, calls this pathological. Sycophantic AI
+            leads to atrophy, not growth.
         </p>
-        <p>
+        <p data-de="Das Social-Vitamins-Framework: drei Dinge, die Menschen zum Wachsen brauchen, in der richtigen Menge, zur richtigen Zeit, aus der richtigen Quelle. Dieses Tool basiert auf dieser Architektur.">
             The Social Vitamins framework: three things people need to grow, in the right proportion,
             at the right time, from the right source. This tool is built on that architecture.
         </p>
-        <div class="vitamins-grid">
-            <div class="vcard vcard-c">
-                <div class="vcard-label">Challenge</div>
-                <div class="vcard-text">What is wrong with your thinking. Directly. Referencing your actual words. No softening. This is where growth happens.</div>
+        <div class="vitamin-row">
+            <div class="vitamin vitamin-c" tabindex="0" role="button" aria-expanded="false">
+                <div class="vitamin-label" data-de="Herausfordern">Challenge</div>
+                <div class="vitamin-text" data-de="Was an deinem Denken falsch ist. Direkt. Mit Bezug auf deine tatsächlichen Worte. Ohne Abschwächung. Hier entsteht Wachstum.">What is wrong with your thinking. Directly. Referencing your actual words. No softening. This is where growth happens.</div>
+                <div class="vitamin-example" data-de="„Du hast das als Kostenproblem eingestuft, aber drei deiner eigenen Diagnosefragen betrafen das Vertriebsteam. Das ist eine Umsatzhypothese im Gewand einer Kostenhypothese.“">"You classified this as a cost problem, but three of your own diagnostic questions were about the sales team. That's a revenue hypothesis wearing a cost hypothesis's name."</div>
+                <div class="vitamin-hint" data-de="In der Praxis ansehen">See it in practice</div>
             </div>
-            <div class="vcard vcard-s">
-                <div class="vcard-label">Support</div>
-                <div class="vcard-text">What you genuinely got right. Specific, not generic. "Good attempt" is not coaching. Real acknowledgment only.</div>
+            <div class="vitamin vitamin-s" tabindex="0" role="button" aria-expanded="false">
+                <div class="vitamin-label" data-de="Unterstützen">Support</div>
+                <div class="vitamin-text" data-de="Was du wirklich richtig gemacht hast. Konkret, nicht allgemein. „Guter Versuch“ ist kein Coaching. Nur echte Anerkennung.">What you genuinely got right. Specific, not generic. "Good attempt" is not coaching. Real acknowledgment only.</div>
+                <div class="vitamin-example" data-de="„Deine erste Diagnosefrage hat die Variable korrekt isoliert, genau dieser Instinkt entwickelt sich bei Senior-Beratern über Jahre. Behalte das bei.“">"Your first diagnostic question isolated the variable correctly, that's exactly the instinct senior consultants build over years. Keep that."</div>
+                <div class="vitamin-hint" data-de="In der Praxis ansehen">See it in practice</div>
             </div>
-            <div class="vcard vcard-r">
-                <div class="vcard-label">Reflection</div>
-                <div class="vcard-text">One open question. The answer is not given. You have to find it. That is how understanding is actually built.</div>
+            <div class="vitamin vitamin-r" tabindex="0" role="button" aria-expanded="false">
+                <div class="vitamin-label" data-de="Reflexion">Reflection</div>
+                <div class="vitamin-text" data-de="Eine offene Frage. Die Antwort wird nicht vorgegeben. Du musst sie finden. So entsteht echtes Verständnis.">One open question. The answer is not given. You have to find it. That is how understanding is actually built.</div>
+                <div class="vitamin-example" data-de="„Wenn der Kunde diese Hypothese jetzt im Raum infrage stellen würde, nach welcher einen Zahl würdest du zuerst fragen?“">"If the client pushed back on that hypothesis in the room right now, what's the one number you'd ask for first?"</div>
+                <div class="vitamin-hint" data-de="In der Praxis ansehen">See it in practice</div>
             </div>
         </div>
     </div>
@@ -504,56 +441,36 @@
 <!-- Research -->
 <section class="section" id="research">
     <div class="container">
-        <div class="section-label">The Research</div>
-        <h2>Grounded in published work</h2>
-        <p>
+        <h2 data-de="Basierend auf veröffentlichter Forschung">Grounded in published work</h2>
+        <p data-de="Das ist kein Wochenendprojekt. Es basiert auf Forschung zu emotionaler Intelligenz, KI-gestützten Tools und psychologischer Sicherheit in interkulturellen Beratungsteams, veröffentlicht im GILE Journal of Skills Development.">
             This is not a weekend project. It emerges from research into emotional intelligence,
-            AI-assisted tools, and psychological safety in intercultural consulting teams --
+            AI-assisted tools, and psychological safety in intercultural consulting teams,
             published in the GILE Journal of Skills Development.
         </p>
 
-        <div class="quote">
-            <div class="quote-text">
-                "The inability for AI -- in a proportionate and timely way -- to provide support,
-                challenge, and reflection is what is leading to the biggest social problems people
-                are encountering with AI. But also in the workplace."
-            </div>
-            <div class="quote-attr">Jazz Rasool &nbsp;·&nbsp; Founder, AI Coaching Alliance &nbsp;·&nbsp; Author, Coaching 5.0 &nbsp;·&nbsp; TEDx Speaker</div>
-        </div>
-
-        <div class="quote quote-orange">
-            <div class="quote-text">
+        <div class="pull-quote pq-red">
+            <div class="pull-quote-text">
                 "We will hire into more entry-level jobs this year than last year.
                 But the skills we require and the way we are onboarding those individuals
                 is fundamentally different."
             </div>
-            <div class="quote-attr">Julie Sweet &nbsp;·&nbsp; Chair and CEO, Accenture</div>
+            <div class="pull-quote-attr" data-de="Julie Sweet, Vorstandsvorsitzende und CEO von Accenture.">Julie Sweet, Chair and CEO of Accenture.</div>
         </div>
-
-        <p>
-            The research question: how do professionals in intercultural, cross-functional teams
-            describe the role of AI-assisted tools in shaping communication and fostering
-            psychological safety? The Clueless Consultant is one answer to that question in practice.
-        </p>
     </div>
 </section>
 
 <!-- About -->
 <section class="dark-section" id="about">
     <div class="container">
-        <div class="section-label">Built by</div>
         <h2>Antony Mervyn Shreyas</h2>
-        <p>
+        <p data-de="Veröffentlichter Forscher zu emotionaler Intelligenz, KI und psychologischer Sicherheit in interkulturellen Beratungsteams. Ehemaliger Accenture-Berater. Baut die Onboarding-Schicht, die Beratungsfirmen noch nicht gebaut haben. Berlin, 2026.">
             Published researcher in emotional intelligence, AI, and psychological safety
             in intercultural consulting workplaces. Former Accenture consultant.
-            Building the onboarding layer that consulting firms have not built yet.
-        </p>
-        <p>
-            Berlin, 2026.
+            Building the onboarding layer that consulting firms have not built yet. Berlin, 2026.
         </p>
         <div class="dark-links">
-            <a href="https://gjsd.gile-edu.org/index.php/home/article/view/13-shreyas-shtaltovna-150-170" target="_blank" class="dark-link">Published Paper</a>
-            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="dark-link dark-link-orange">Try the Coach</a>
+            <a href="https://gjsd.gile-edu.org/index.php/home/article/view/13-shreyas-shtaltovna-150-170" target="_blank" class="dark-link" data-de="Veröffentlichte Studie">Published Paper</a>
+            <a href="https://clueless-consultant.streamlit.app/" target="_blank" class="dark-link dark-link-primary" data-de="Coach ausprobieren">Try the Coach</a>
             <a href="https://deutschlehrer777.streamlit.app/" target="_blank" class="dark-link">Deutsch Trainer</a>
         </div>
     </div>
@@ -562,9 +479,96 @@
 <!-- Footer -->
 <footer>
     <div class="container">
-        <p>Clueless Consultant &nbsp;·&nbsp; Built with Claude &nbsp;·&nbsp; 2026</p>
+        <p data-de="Clueless Consultant. Gebaut mit Claude, 2026.">Clueless Consultant. Built with Claude, 2026.</p>
     </div>
 </footer>
+
+<script>
+    (function () {
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // One orchestrated moment: the hero issue tree draws itself in, once, on load.
+        var lines = document.querySelectorAll('#tree-lines path');
+        var nodeGroups = ['n-root', 'n-rev', 'n-cost', 'n-price', 'n-volume', 'n-fixed', 'n-var'].map(function (id) {
+            return document.getElementById(id);
+        });
+
+        if (prefersReduced) {
+            lines.forEach(function (l) { l.style.strokeDasharray = 'none'; });
+        } else {
+            nodeGroups.forEach(function (g) { g.style.opacity = '0'; });
+            lines.forEach(function (l) {
+                var len = l.getTotalLength();
+                l.style.strokeDasharray = len;
+                l.style.strokeDashoffset = len;
+            });
+
+            var seq = [
+                { nodes: [0], lines: [], delay: 0 },
+                { nodes: [1], lines: [0], delay: 150 },
+                { nodes: [2], lines: [1], delay: 300 },
+                { nodes: [3, 4], lines: [2, 3], delay: 550 },
+                { nodes: [5, 6], lines: [4, 5], delay: 750 }
+            ];
+
+            seq.forEach(function (step) {
+                setTimeout(function () {
+                    step.lines.forEach(function (i) {
+                        lines[i].style.transition = 'stroke-dashoffset 0.5s ease';
+                        lines[i].style.strokeDashoffset = '0';
+                    });
+                    step.nodes.forEach(function (i) {
+                        nodeGroups[i].style.transition = 'opacity 0.4s ease';
+                        nodeGroups[i].style.opacity = '1';
+                    });
+                }, step.delay);
+            });
+        }
+
+        function toggleVitamin(card) {
+            var expanded = card.classList.toggle('expanded');
+            card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        }
+        document.querySelectorAll('.vitamin').forEach(function (card) {
+            card.addEventListener('click', function () { toggleVitamin(card); });
+            card.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleVitamin(card);
+                }
+            });
+        });
+
+        // DE / EN toggle
+        var translatable = document.querySelectorAll('[data-de]');
+        translatable.forEach(function (el) {
+            el.dataset.en = el.textContent;
+        });
+
+        function applyLang(lang) {
+            document.documentElement.lang = lang;
+            translatable.forEach(function (el) {
+                el.textContent = lang === 'de' ? el.dataset.de : el.dataset.en;
+            });
+            document.querySelectorAll('.lang-btn').forEach(function (btn) {
+                var active = btn.dataset.lang === lang;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+        }
+
+        var savedLang = 'en';
+        try { savedLang = localStorage.getItem('cc_lang') || 'en'; } catch (e) {}
+        applyLang(savedLang);
+
+        document.querySelectorAll('.lang-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                applyLang(btn.dataset.lang);
+                try { localStorage.setItem('cc_lang', btn.dataset.lang); } catch (e) {}
+            });
+        });
+    })();
+</script>
 
 </body>
 </html>
